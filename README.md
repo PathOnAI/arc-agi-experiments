@@ -21,3 +21,4 @@ Starting 02/12, I plan to spend one month exploring AGI with fellow South Park C
 * https://github.com/michaelhodel/re-arc
 * https://github.com/ConfeitoHS/arcle
 * https://github.com/neoneye/arc-notes/tree/main/awesome#editors
+* https://github.com/jerber/arc_agi
