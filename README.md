@@ -20,3 +20,4 @@ Starting 02/12, I plan to spend one month exploring AGI with fellow South Park C
 * https://github.com/neoneye/arc-notes?tab=readme-ov-file
 * https://github.com/michaelhodel/re-arc
 * https://github.com/ConfeitoHS/arcle
+* https://github.com/neoneye/arc-notes/tree/main/awesome#editors
