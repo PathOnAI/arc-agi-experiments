@@ -5,6 +5,11 @@ Click [here](https://jeremyberman.substack.com/p/how-i-got-a-record-536-on-arc-a
 - If you would like to use other model providers, see the `.example_env` for how to set the env variables.
 3. `poetry shell`
 4. `python run.py`
+```
+python3.11 -m venv venv
+. venv/bin/activate
+pip install -e .
+```
 
 # How I came in first on ARC-AGI-Pub using Sonnet 3.5 with Evolutionary Test-time Compute
 I think [ARC-AGI](https://arcprize.org/) is the most important benchmark we have today. It’s surprising that even the most sophisticated Large Language Models (LLMs), like OpenAI o1 and Claude Sonnet 3.5, struggle with simple puzzles that humans can solve easily.
