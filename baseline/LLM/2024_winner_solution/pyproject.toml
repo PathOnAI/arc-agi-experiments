@@ -1,0 +1,106 @@
+[tool.poetry]
+name = "arc-public"
+version = "0.1.0"
+description = ""
+authors = ["Jeremy Berman <jerber@sas.upenn.edu>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.11.0"
+openai = "^1.51.2"
+anthropic = "^0.36.1"
+python-dotenv = "^1.0.1"
+devtools = "^0.12.2"
+ruff = "^0.6.9"
+asyncpg = "^0.30.0"
+google-generativeai = "^0.8.3"
+numpy = "^2.1.3"
+matplotlib = "^3.9.2"
+logfire = "^2.1.2"
+redis = {extras = ["hiredis"], version = "^5.2.0"}
+fastapi = {extras = ["all"], version = "^0.115.4"}
+httpx = "^0.27.2"
+anyio = "^4.6.2.post1"
+asyncer = "^0.0.8"
+scipy = "^1.14.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.mypy]
+plugins = 'pydantic.mypy'
+strict = true
+check_untyped_defs = true
+disallow_untyped_calls = true
+disallow_incomplete_defs = true
+disallow_untyped_defs = true
+disallow_untyped_decorators = false
+disallow_subclassing_any = false
+ignore_missing_imports = true
+follow_imports = 'skip'
+exclude = [
+    "venv",
+    ".venv",
+    "alembic",
+    "app/dbs/sql_gen/gen/db.py"
+]
+
+[tool.ruff]
+target-version = "py312"
+exclude = [
+    "alembic",
+    "app/dbs/sql_gen/gen/db.py",
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+]
+
+[tool.ruff.lint]
+unfixable = [
+    "F401", # unused imports
+]
+select = [
+    "E", # pycodestyle errors
+    "W", # pycodestyle warnings
+    "F", # pyflakes
+    "I", # isort
+    "B", # flake8-bugbear
+    "C4", # flake8-comprehensions
+    "UP", # pyupgrade
+    "ARG001", # unused arguments in functions
+]
+ignore = [
+    "E501", # line too long, handled by black
+    "B008", # do not perform function calls in argument defaults
+    "W191", # indentation contains tabs
+    "B904", # Allow raising exceptions without from e, for HTTPException
+]
+
+[tool.ruff.lint.pyupgrade]
+# Preserve types, even if a file imports `from __future__ import annotations`.
+keep-runtime-typing = true

@@ -1,0 +1,10 @@
+{
+  "$schema": "https://params.com/params.json",
+  "docs": {
+    "main": "writeup.md",
+    "sidebar": {
+      "Introduction": "writeup.md",
+      "Setup": "README.md"
+    }
+  }
+}
