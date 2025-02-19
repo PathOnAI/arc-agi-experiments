@@ -551,7 +551,11 @@ async def run_tree(
             plot=PLOT,
             time_took_ms=(took_level * 1000),
         )
-        import pdb; pdb.set_trace()
+        # import pdb; pdb.set_trace()
+        transform_results = run_python_transform_sync(code=local_attempts[0].python_code_str, grid_lists=[deepcopy(test.input) for test in challenge.test], timeout=5, raise_exception=True)
+        # print(local_attempts[0].python_code_str)
+        # print([deepcopy(test.input) for test in challenge.test])
+        # print(transform_results)
         logfire.debug(f"[{challenge.id}] eval took {(time.time() - start_eval)} secs")
         all_attempts.extend(local_attempts)
         all_attempts = dedup_attempts(all_attempts)
@@ -665,9 +669,12 @@ async def solve_challenge(
         first_solution.plot(ignore_fixing=True)
         second_solution.plot(ignore_fixing=True)
 
+    print(first_solution.python_code_str, second_solution.python_code_str, get_grids_from_attempt(first_solution), get_grids_from_attempt(second_solution))
+
     return get_grids_from_attempt(first_solution), get_grids_from_attempt(
         second_solution
     )
+
 
 
 async def solve_challenge_server(

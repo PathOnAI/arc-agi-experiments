@@ -6,6 +6,9 @@ Evolutionary Test-time Compute
     * change the tree config to 2 attempts, add o3.mini_tree to run.py
     * use gpt-4o-mini
     * change to small or prod
+    * install scipy
+    * remove only_run_ids={"045e512c"},
+    * one challenge one python transformation function
 
 https://github.com/rgreenblatt/arc_draw_more_samples_pub
 
@@ -20,6 +23,11 @@ https://github.com/rgreenblatt/arc_draw_more_samples_pub
 
 attempts = dedup_attempts(attempts)
 import pdb; pdb.set_trace()
+
+
+transform_results = run_python_transform_sync(code=local_attempts[0].python_code_str, grid_lists=[deepcopy(test.input) for test in challenge.test], timeout=5, raise_exception=True)
+
+* bug fix: pip install scipy
 
 ```
 (Pdb) local_attempts[0].python_code_str

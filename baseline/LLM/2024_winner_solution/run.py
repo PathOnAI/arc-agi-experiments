@@ -16,7 +16,7 @@ from src.logic import (
     solve_challenge_background,
 )
 from src.models import GRID, Challenge, RootAttemptConfig
-from src.trees import deepseek, experiments, small
+from src.trees import deepseek, experiments, small, prod
 
 
 class ChallengeSolution(BaseModel):
@@ -186,12 +186,12 @@ async def run() -> None:
         # tree=deepseek.prod_kaggle_tree,
         # tree=deepseek.small_baseten_tree,
         tree=small.small_tree,
-        # limit=10,
-        # offset=50,
         limit=1,
-        offset=0,
+        offset=10,
+        # limit=1,
+        # offset=0,
         max_concurrent=20,
-        only_run_ids={"045e512c"},
+        only_run_ids=None
     )
     evaluate_solutions(
         attempts_solutions_path=attempts_solutions_path,
