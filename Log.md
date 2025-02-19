@@ -3,6 +3,8 @@
 ## 02/19/2025, Wednesday
 * The Surprising Effectiveness of Test-Time Training for Abstract Reasoning
     * TTT, test-time training + sota program generation (program synthesis)
+        * 61.9% accuracy when ensembled with program synthesis approaches, comparable to average human performance on the dataset.
+        * We demonstrate that tasks that could only be solved by program synthesis previously can be solved with fully neural approaches equipped with our TTT framework.
     * a significant finding in recent years has been that LM performance can be substantially improved by augmenting LM decoding with additional "test-time computation". 
         * chain-of-thought
         * sampling with majority voting (self- consistency)
