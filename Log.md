@@ -2,6 +2,7 @@
 
 ## 02/19/2025, Wednesday
 * https://arcprize.org/blog/beat-arc-agi-deep-learning-and-program-synthesis
+    * https://news.ycombinator.com/item?id=40711484
 * Evolutionary Test-time Compute
     * 5 attempts, but generated 3 local attempts
     * how to select top 5
@@ -13,7 +14,6 @@
         * agent for program synthesis, but need to generate better feedback for the agent to generate better code
 ```
 * The best-performing functions are selected as parents
-
 * These successful functions are used to create revision prompts
 ```
 
