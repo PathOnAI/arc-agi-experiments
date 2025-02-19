@@ -1,8 +1,8 @@
-# Note
-Evolutionary Test-time Compute
+# Log
 
 ## 02/19/2025, Wednesday
-* TODO
+* https://arcprize.org/blog/beat-arc-agi-deep-learning-and-program-synthesis
+* Evolutionary Test-time Compute
     * 5 attempts, but generated 3 local attempts
     * how to select top 5
         * get_best_attempts of the logic.py file
