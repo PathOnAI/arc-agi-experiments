@@ -1,6 +1,16 @@
 # Log
 
 ## 02/19/2025, Wednesday
+* The Surprising Effectiveness of Test-Time Training for Abstract Reasoning
+    * TTT, test-time training + sota program generation (program synthesis)
+    * a significant finding in recent years has been that LM performance can be substantially improved by augmenting LM decoding with additional "test-time computation". 
+        * chain-of-thought
+        * sampling with majority voting (self- consistency)
+        * code execution
+        * search
+    * One scaling strategy that has gained recent attention is test-time training (TTT), in which models are updated through explicit gradient steps based on test-time inputs
+        * typically via an unsupervised objective on a single input, or a supervised objective applied to one or two in-context labeled examples.
+    * https://github.com/ekinakyurek/marc
 * https://arcprize.org/blog/beat-arc-agi-deep-learning-and-program-synthesis
     * https://news.ycombinator.com/item?id=40711484
     * LLM-guided program synthesis: His solution uses GPT-4o to search thousands of Python programs per task (and iteratively debug the most promising ones) to find a program that successfully maps the task input/output examples.
