@@ -551,6 +551,7 @@ async def run_tree(
             plot=PLOT,
             time_took_ms=(took_level * 1000),
         )
+        import pdb; pdb.set_trace()
         logfire.debug(f"[{challenge.id}] eval took {(time.time() - start_eval)} secs")
         all_attempts.extend(local_attempts)
         all_attempts = dedup_attempts(all_attempts)
