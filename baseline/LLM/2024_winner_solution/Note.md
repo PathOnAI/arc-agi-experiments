@@ -1,6 +1,12 @@
 # Note
 Evolutionary Test-time Compute
 
+## 02/19/2025, Wednesday
+* TODO
+    * how to select top 5
+        * get_best_attempts of the logic.py file
+    * how to generate more attempts?
+
 ## 02/18/2025, Tuesday
 * TODO
     * change the tree config to 2 attempts, add o3.mini_tree to run.py
