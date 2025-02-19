@@ -3,9 +3,11 @@ Evolutionary Test-time Compute
 
 ## 02/19/2025, Wednesday
 * TODO
+    * 5 attempts, but generated 3 local attempts
     * how to select top 5
         * get_best_attempts of the logic.py file
     * how to generate more attempts?
+    * better to have a tree structure to store the attempts...
 
 ## 02/18/2025, Tuesday
 * TODO
