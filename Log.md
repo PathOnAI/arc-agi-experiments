@@ -3,6 +3,10 @@
 ## 02/19/2025, Wednesday
 * https://arcprize.org/blog/beat-arc-agi-deep-learning-and-program-synthesis
     * https://news.ycombinator.com/item?id=40711484
+    * LLM-guided program synthesis: His solution uses GPT-4o to search thousands of Python programs per task (and iteratively debug the most promising ones) to find a program that successfully maps the task input/output examples.
+    * test-time training
+    * arc-agi
+        * ARC-AGI is a benchmark designed to measure an AI system's ability to acquire new skills efficiently and solve unseen problems requiring abstract reasoning.
 * Evolutionary Test-time Compute
     * 5 attempts, but generated 3 local attempts
     * how to select top 5
