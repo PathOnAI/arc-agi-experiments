@@ -8,6 +8,14 @@ Evolutionary Test-time Compute
         * get_best_attempts of the logic.py file
     * how to generate more attempts?
     * better to have a tree structure to store the attempts...
+    * GRID_CHANGE_PROMPT_EXAMPLE_3
+        * feedback? reward?
+        * agent for program synthesis, but need to generate better feedback for the agent to generate better code
+```
+* The best-performing functions are selected as parents
+
+* These successful functions are used to create revision prompts
+```
 
 ## 02/18/2025, Tuesday
 * TODO
