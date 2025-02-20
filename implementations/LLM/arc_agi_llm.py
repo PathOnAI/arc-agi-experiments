@@ -16,11 +16,12 @@ MODEL = "o3-mini"
 
 # https://github.com/arcprizeorg/model_baseline/blob/main/prompt_example_o3.md
 
-
-## step 1:
+## step 1
+## template for o3-mini api call and deep seek r1 api call
+## step 2:
 ## add a data loader to transform an input idx to openai messages
 ## add a function to evaluate the output of the llm output to calculate the accuracy
-## step 2:
+## step 3:
 ## loop over the data loader, and call the llm
 
 
