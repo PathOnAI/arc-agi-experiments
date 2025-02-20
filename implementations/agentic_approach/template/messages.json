@@ -22,11 +22,11 @@
       "content": null,
       "tool_calls": [
         {
-          "id": "call_OAAHxQAX588TYubm2ER3eQC9",
+          "id": "call_MP9MUCFjRaAJ9z4btt1BLDSX",
           "type": "function",
           "function": {
             "name": "write_to_file",
-            "arguments": "{\"file_path\": \"two_sum.py\", \"text\": \"def two_sum(nums, target):\\n    # Create a dictionary to hold the numbers and their indices\\n    num_to_index = {}\\n    for i, num in enumerate(nums):\\n        complement = target - num\\n        if complement in num_to_index:\\n            return [num_to_index[complement], i]\\n        num_to_index[num] = i\\n    # According to the problem statement, there is always exactly one solution.\\n    return []\\n\\n\\n# Test cases\\nif __name__ == '__main__':\\n    # Test case 1\\n    nums1 = [2, 7, 11, 15]\\n    target1 = 9\\n    expected1 = [0, 1]  # 2 + 7 = 9\\n    result1 = two_sum(nums1, target1)\\n    print(\\\"Test case 1:\\\\nInput: nums = {} target = {}\\\\nOutput: {}\\\\nExpected: {}\\\\n\\\".format(nums1, target1, result1, expected1))\\n\\n    # Test case 2\\n    nums2 = [3, 2, 4]\\n    target2 = 6\\n    expected2 = [1, 2]  # 2 + 4 = 6\\n    result2 = two_sum(nums2, target2)\\n    print(\\\"Test case 2:\\\\nInput: nums = {} target = {}\\\\nOutput: {}\\\\nExpected: {}\\\\n\\\".format(nums2, target2, result2, expected2))\\n\\n    # Test case 3\\n    nums3 = [3, 3]\\n    target3 = 6\\n    expected3 = [0, 1]  # 3 + 3 = 6\\n    result3 = two_sum(nums3, target3)\\n    print(\\\"Test case 3:\\\\nInput: nums = {} target = {}\\\\nOutput: {}\\\\nExpected: {}\\\\n\\\".format(nums3, target3, result3, expected3))\\n\"}"
+            "arguments": "{\"file_path\": \"two_sum.py\", \"text\": \"def twoSum(nums, target):\\n    # Create a hash map to store value to index mapping\\n    hash_map = {}\\n    for i, num in enumerate(nums):\\n        diff = target - num\\n        # Check if the complement exists in the map\\n        if diff in hash_map:\\n            return [hash_map[diff], i]\\n        # Otherwise, store the current number and its index\\n        hash_map[num] = i\\n    return []\\n\\nif __name__ == \\\"__main__\\\":\\n    # Test case 1:\\n    nums = [2, 7, 11, 15]\\n    target = 9\\n    print(\\\"Test case 1: nums = {} target = {}\\\".format(nums, target))\\n    print(\\\"Output:\\\", twoSum(nums, target))\\n    \\n    # Test case 2:\\n    nums = [3, 2, 4]\\n    target = 6\\n    print(\\\"Test case 2: nums = {} target = {}\\\".format(nums, target))\\n    print(\\\"Output:\\\", twoSum(nums, target))\\n    \\n    # Test case 3:\\n    nums = [3, 3]\\n    target = 6\\n    print(\\\"Test case 3: nums = {} target = {}\\\".format(nums, target))\\n    print(\\\"Output:\\\", twoSum(nums, target))\\n\"}"
           }
         }
       ]
@@ -36,7 +36,7 @@
   {
     "index": 3,
     "message": {
-      "tool_call_id": "call_OAAHxQAX588TYubm2ER3eQC9",
+      "tool_call_id": "call_MP9MUCFjRaAJ9z4btt1BLDSX",
       "role": "tool",
       "name": "write_to_file",
       "content": "File written successfully."
@@ -50,7 +50,7 @@
       "content": null,
       "tool_calls": [
         {
-          "id": "call_SDR5Kg32jxM92hNaxBNLvOGf",
+          "id": "call_EJNBo8tQbqpcMgptSOiDnAof",
           "type": "function",
           "function": {
             "name": "run_python_script",
@@ -64,10 +64,10 @@
   {
     "index": 5,
     "message": {
-      "tool_call_id": "call_SDR5Kg32jxM92hNaxBNLvOGf",
+      "tool_call_id": "call_EJNBo8tQbqpcMgptSOiDnAof",
       "role": "tool",
       "name": "run_python_script",
-      "content": "stdout:Test case 1:\nInput: nums = [2, 7, 11, 15] target = 9\nOutput: [0, 1]\nExpected: [0, 1]\n\nTest case 2:\nInput: nums = [3, 2, 4] target = 6\nOutput: [1, 2]\nExpected: [1, 2]\n\nTest case 3:\nInput: nums = [3, 3] target = 6\nOutput: [0, 1]\nExpected: [0, 1]\n\n"
+      "content": "stdout:Test case 1: nums = [2, 7, 11, 15] target = 9\nOutput: [0, 1]\nTest case 2: nums = [3, 2, 4] target = 6\nOutput: [1, 2]\nTest case 3: nums = [3, 3] target = 6\nOutput: [0, 1]\n"
     },
     "type": "<class 'dict'>"
   },
@@ -75,7 +75,7 @@
     "index": 6,
     "message": {
       "role": "assistant",
-      "content": "Below is the Python code implementation for the two-sum problem, along with test cases to verify its correctness:\n\n------------------------------------------------\n# two_sum.py\n\ndef two_sum(nums, target):\n    # Create a dictionary to hold the numbers and their indices\n    num_to_index = {}\n    for i, num in enumerate(nums):\n        complement = target - num\n        if complement in num_to_index:\n            return [num_to_index[complement], i]\n        num_to_index[num] = i\n    # According to the problem statement, there is always exactly one solution.\n    return []\n\n# Test cases\nif __name__ == '__main__':\n    # Test case 1\n    nums1 = [2, 7, 11, 15]\n    target1 = 9\n    expected1 = [0, 1]  # 2 + 7 = 9\n    result1 = two_sum(nums1, target1)\n    print(\"Test case 1:\\nInput: nums = {} target = {}\\nOutput: {}\\nExpected: {}\\n\".format(nums1, target1, result1, expected1))\n    \n    # Test case 2\n    nums2 = [3, 2, 4]\n    target2 = 6\n    expected2 = [1, 2]  # 2 + 4 = 6\n    result2 = two_sum(nums2, target2)\n    print(\"Test case 2:\\nInput: nums = {} target = {}\\nOutput: {}\\nExpected: {}\\n\".format(nums2, target2, result2, expected2))\n    \n    # Test case 3\n    nums3 = [3, 3]\n    target3 = 6\n    expected3 = [0, 1]  # 3 + 3 = 6\n    result3 = two_sum(nums3, target3)\n    print(\"Test case 3:\\nInput: nums = {} target = {}\\nOutput: {}\\nExpected: {}\\n\".format(nums3, target3, result3, expected3))\n\n------------------------------------------------\n\nI ran the test cases and they passed correctly."
+      "content": "The solution has been implemented in the two_sum.py script, and the test cases have been executed successfully. The output for the example tests is:\n\nTest case 1: nums = [2, 7, 11, 15] target = 9  \nOutput: [0, 1]\n\nTest case 2: nums = [3, 2, 4] target = 6  \nOutput: [1, 2]\n\nTest case 3: nums = [3, 3] target = 6  \nOutput: [0, 1]\n\nYou can run the script to verify the results."
     },
     "type": "<class 'dict'>"
   }

@@ -1,6 +1,5 @@
 import logging
 from dotenv import load_dotenv
-from openai import OpenAI
 from litellm import completion
 import subprocess
 import requests
@@ -91,7 +90,6 @@ tools = [
     }
 ]
 
-client = OpenAI()
 available_tools = {
     "write_to_file": write_to_file,
     "run_python_script": run_python_script,
