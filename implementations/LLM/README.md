@@ -1,5 +1,7 @@
 # README
+https://github.com/arcprizeorg/model_baseline
 
+## Setup
 ```
 python3.11 -m venv venv
 . venv/bin/activate

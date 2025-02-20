@@ -1,5 +1,8 @@
 # Log
 
+## 02/20/2025, Thursday
+* model baseline, add more examples
+
 ## 02/19/2025, Wednesday
 * The Surprising Effectiveness of Test-Time Training for Abstract Reasoning
     * TTT, test-time training + sota program generation (program synthesis)
