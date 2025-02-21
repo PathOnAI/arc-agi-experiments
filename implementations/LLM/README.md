@@ -1,6 +1,12 @@
 # README
 https://github.com/arcprizeorg/model_baseline
 
+
+## python_function_baseline
+```
+python arc_agi_llm.py 
+```
+
 ## Setup
 ```
 python3.11 -m venv venv
