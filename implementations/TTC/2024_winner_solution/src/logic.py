@@ -232,6 +232,7 @@ def challenge_to_messages(
                 ]
             )
 
+        import pdb; pdb.set_trace()
         messages.extend(
             [
                 {

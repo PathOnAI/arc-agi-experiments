@@ -8,7 +8,7 @@ Click [here](https://jeremyberman.substack.com/p/how-i-got-a-record-536-on-arc-a
 ```
 python3.11 -m venv venv
 . venv/bin/activate
-pip install -e .
+pip install -r requirements.txt
 ```
 
 # How I came in first on ARC-AGI-Pub using Sonnet 3.5 with Evolutionary Test-time Compute

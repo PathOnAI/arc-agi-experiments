@@ -18,3 +18,4 @@ litellm==1.42.1
 langchain-community==0.2.7
 litewebagent==0.1.7
 httpx==0.27.2
+scipy==1.12.0
