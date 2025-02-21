@@ -2,6 +2,9 @@
 
 ## 02/20/2025, Thursday
 * model baseline, add more examples
+* python function baseline
+    * https://github.com/TataKKKL/arc-agi-experiments/tree/main/implementations/LLM/python_function_baseline
+    * core function extracted from 2024 winner solution (DFS tree search)
 
 ## 02/19/2025, Wednesday
 * The Surprising Effectiveness of Test-Time Training for Abstract Reasoning
