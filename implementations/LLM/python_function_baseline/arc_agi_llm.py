@@ -29,7 +29,7 @@ from examples import example_1_same_grid_reasoning,  example_1_same_grid_challen
 
 
 
-base_path='../data/arc-prize-2024/'
+base_path='../../data/arc-prize-2024/'
 # Loading JSON data
 def load_json(file_path):
     with open(file_path) as f:
