@@ -32,7 +32,7 @@ from code_parsing import parse_python_code
 from copy import deepcopy
 from data_loading import t, task, task_solution
 from prepare_prompt import challenge_to_messages
-from code_execution import run_challenge_transforms
+from code_execution import run_transforms
 from visualization import plot_task_complete
 
 
@@ -62,9 +62,16 @@ response = completion(
 
 print(response)
 code = parse_python_code(response.choices[0].message.content)
-result = run_challenge_transforms(challenge, code)
+result = run_transforms([deepcopy(test["input"]) for test in challenge["test"]], code)
+# result = run_challenge_transforms(challenge, code)
 print(result)
 prediction = result.get_result()
+num_train = len(task['train'])
+for i in range(num_train):
+    result = run_transforms([deepcopy(task['train'][i]['input'])], code)
+    task['train'][i]['prediction'] = result.get_result()
+
+
 print(prediction)
 print(task_solution)
 print(task['test'][0]['input'])
