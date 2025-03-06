@@ -50,7 +50,7 @@ def plot_task_complete(task, task_solution, prediction=None):
         
         # Third column remains empty for training examples
         ax = plt.subplot2grid((num_rows, num_cols), (i, 2))
-        ax.remove()
+        plot_grid(ax, task['train'][i]['prediction'], f'Train {i+1} Program Prediction')
     
     # Plot test row
     # Test input - first column

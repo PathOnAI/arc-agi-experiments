@@ -191,10 +191,10 @@ def run_python_transform_sync(
     executor = PythonTransformExecutor(timeout=timeout)
     return executor.execute_transform(code, grid_lists, raise_exception)
 
-def run_challenge_transforms(challenge, code: str) -> PythonResult:
+def run_transforms(input_grid, code: str) -> PythonResult:
     return run_python_transform_sync(
         code=code,
-        grid_lists=[deepcopy(test["input"]) for test in challenge["test"]],
+        grid_lists=input_grid,
         timeout=5,
         raise_exception=True
     )
