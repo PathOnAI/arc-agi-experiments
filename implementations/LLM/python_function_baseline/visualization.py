@@ -21,13 +21,15 @@ def plot_grid(ax, grid, title):
     ax.set_yticklabels([])
     ax.set_title(title)
 
-def plot_task_complete(task, task_solution, prediction=None):
+def plot_task_complete(task, task_solution, prediction=None, fig_name=None):
     """
     Plot a complete task with training examples, test input, solution, and prediction.
     
     Args:
         task (dict): Task dictionary containing train and test examples
+        task_solution (list): Solution grid for the test example
         prediction (list): Optional predicted output grid
+        fig_name (str): Optional filename to save the figure. If None, figure is not saved.
     """
     num_train = len(task['train'])
     
@@ -78,4 +80,8 @@ def plot_task_complete(task, task_solution, prediction=None):
     fig.patch.set_linewidth(3)  # Reduced from 5 to 3
     fig.patch.set_edgecolor('black')
     
-    plt.show()
+    # Save figure if fig_name is provided
+    if fig_name is not None:
+        plt.savefig(fig_name, bbox_inches='tight')
+    else:
+        plt.show()

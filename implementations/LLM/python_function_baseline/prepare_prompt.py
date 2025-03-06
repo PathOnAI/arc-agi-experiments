@@ -136,8 +136,6 @@ def challenge_to_messages(
                 use_ascii=use_ascii,
                 use_array=use_array,
             )
-        print(example_1_grid_same_prompt)
-        print(example_1_same_grid_reasoning)
         messages.extend([
             {
                 "role": "user",
