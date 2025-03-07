@@ -2,6 +2,21 @@
 https://github.com/arcprizeorg/model_baseline
 
 
+
+## 2. next steps
+* recursively update the python function until the best solution is found
+
+```
+python arc_agi_recursive_llm_calls.py
+```
+
+## 1.python_function_baseline
+let llm write a python function that could convert arc agi input to output
+```
+python arc_agi_llm.py 
+```
+
+
 ## Model Baseline
 ```
 python3.11 -m venv venv

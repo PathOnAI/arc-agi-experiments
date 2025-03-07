@@ -88,15 +88,6 @@ def get_llm_feedback(task, task_solution, prediction, code, fig_path=None):
         code (str): The transformation code to evaluate
         fig_path (str, optional): Path to save the visualization figure. If None, a default name is used.
     """
-    # # Calculate evaluation metrics
-    # train_preds = [ex['prediction'][0] for ex in task['train']]
-    # train_targets = [ex['output'] for ex in task['train']]
-    
-    # cell_accuracy = calculate_accuracy(prediction, task_solution)
-    # grid_accuracy = calculate_grid_accuracy(prediction, task_solution)
-    # train_cell_accuracy = calculate_accuracy(train_preds, train_targets)
-    # train_grid_accuracy = calculate_grid_accuracy(train_preds, train_targets)
-    
     # Create and save the visualization
     plt.figure(figsize=(15, 10))
     feedback_fig_name = fig_path if fig_path is not None else 'feedback_visualization.png'
@@ -152,104 +143,212 @@ def get_llm_feedback(task, task_solution, prediction, code, fig_path=None):
     
     return feedback_response.choices[0].message.content
 
-# Main execution
-challenge = {
-    'id': t,
-    'train': task['train'],
-    'test': task['test']
-}
+def evaluate_solution(task, task_solution, prediction, code=None):
+    """Evaluate the current solution and return metrics
+    
+    Args:
+        task (dict): Task dictionary containing train and test examples
+        task_solution (list): Solution grid for the test example
+        prediction (list): Predicted output grid
+        code (str, optional): The transformation code used, if available
+        
+    Returns:
+        dict: Metrics including cell and grid accuracies
+    """
+    # Calculate evaluation metrics
+    train_preds = [ex['prediction'] for ex in task['train']]
+    train_targets = [ex['output'] for ex in task['train']]
+    
+    cell_accuracy = calculate_accuracy([prediction], [task_solution])
+    grid_accuracy = calculate_grid_accuracy([prediction], [task_solution])
+    train_cell_accuracy = calculate_accuracy(train_preds, train_targets)
+    train_grid_accuracy = calculate_grid_accuracy(train_preds, train_targets)
+    
+    return {
+        'cell_accuracy': cell_accuracy,
+        'grid_accuracy': grid_accuracy,
+        'train_cell_accuracy': train_cell_accuracy,
+        'train_grid_accuracy': train_grid_accuracy
+    }
 
-messages = challenge_to_messages(
-    challenge=challenge,
-    prompt_text=PROMPT_REASONING,
-    add_examples=True,
-    use_cache_control=True,
-    include_diffs=True,
-    include_image=False,
-    use_ascii=True,
-    use_array=True
-)
+def execute_on_examples(challenge, code):
+    """Execute the transformation code on all examples
+    
+    Args:
+        challenge (dict): Challenge dictionary containing train and test examples
+        code (str): The transformation code to execute
+        
+    Returns:
+        tuple: (task with predictions, test predictions)
+    """
+    # Execute on test examples
+    result = run_transforms([deepcopy(test["input"]) for test in challenge["test"]], code)
+    prediction = result.get_result()
+    
+    # Execute on training examples
+    task_copy = deepcopy(challenge)
+    num_train = len(task_copy['train'])
+    for i in range(num_train):
+        result = run_transforms([deepcopy(task_copy['train'][i]['input'])], code)
+        task_copy['train'][i]['prediction'] = result.get_result()
+    
+    return task_copy, prediction
 
-# # Print message length for debugging
-# print(f"Prompt token length estimate: {len(str(messages)) / 4}")
-
-# Call the model
-response = completion(
-    model=MODEL,
-    messages=messages
-)
-
-# Print the full response content
-print("\n========== FULL LLM RESPONSE ==========\n")
-print(response.choices[0].message.content)
-print("\n======================================\n")
-
-# Extract and execute the code
-code = parse_python_code(response.choices[0].message.content)
-result = run_transforms([deepcopy(test["input"]) for test in challenge["test"]], code)
-prediction = result.get_result()
-
-# Execute on training examples
-num_train = len(task['train'])
-for i in range(num_train):
-    result = run_transforms([deepcopy(task['train'][i]['input'])], code)
-    task['train'][i]['prediction'] = result.get_result()
-
-# Visualize results (this will be visible to the user)
-plot_task_complete(task, task_solution, prediction, fig_name='iter_1.png')
-
-# Get feedback from LLM
-print("\n========== GENERATING FEEDBACK ==========\n")
-feedback = get_llm_feedback(task, task_solution, prediction, code)
-
-# # Print metrics and feedback
-# print("\n========== SOLUTION METRICS ==========")
-# print(f"Test Cell Accuracy: {metrics['cell_accuracy']:.4f}")
-# print(f"Test Grid Accuracy: {metrics['grid_accuracy']:.4f}")
-# print(f"Training Cell Accuracy: {metrics['train_cell_accuracy']:.4f}")
-# print(f"Training Grid Accuracy: {metrics['train_grid_accuracy']:.4f}")
-
-print("\n========== LLM FEEDBACK ==========\n")
-print(feedback)
-
-
-# Append the original solution and feedback to messages for the next iteration
-messages.append({
-    "role": "assistant", 
-    "content": "the generated code is {}".format(code)
-})
-
-messages.append({
-    "role": "user",
-    "content": f"""I received the following feedback on my solution:
+def iterative_llm_solution(max_iterations=5, model=MODEL):
+    """Run iterative LLM solution process with specified number of iterations
+    
+    Args:
+        max_iterations (int): Maximum number of iterations to run
+        model (str): Model name to use for LLM calls
+        
+    Returns:
+        dict: Results including best solution, metrics, and iteration history
+    """
+    print(f"\n===== Starting Iterative LLM Solution (max {max_iterations} iterations) =====\n")
+    
+    # Initialize challenge
+    challenge = {
+        'id': t,
+        'train': task['train'],
+        'test': task['test']
+    }
+    
+    # Prepare initial messages
+    messages = challenge_to_messages(
+        challenge=challenge,
+        prompt_text=PROMPT_REASONING,
+        add_examples=True,
+        use_cache_control=True,
+        include_diffs=True,
+        include_image=False,
+        use_ascii=True,
+        use_array=True
+    )
+    
+    # Track iteration history
+    history = []
+    best_solution = {
+        'iteration': 0,
+        'code': None,
+        'metrics': {'train_grid_accuracy': 0, 'train_cell_accuracy': 0, 'grid_accuracy': 0, 'cell_accuracy': 0},
+        'prediction': None
+    }
+    
+    # Iterative solution process
+    for iteration in range(1, max_iterations + 1):
+        print(f"\n===== Iteration {iteration}/{max_iterations} =====\n")
+        
+        # Call the model
+        print(f"Calling LLM for solution attempt {iteration}...")
+        response = completion(
+            model=model,
+            messages=messages
+        )
+        
+        # Extract and execute the code
+        code = parse_python_code(response.choices[0].message.content)
+        print(f"Executing solution code from iteration {iteration}...")
+        
+        # Execute on all examples
+        task_with_preds, prediction = execute_on_examples(challenge, code)
+        
+        # Save visualization for this iteration
+        fig_path = f'iter_{iteration}.png'
+        plot_task_complete(task_with_preds, task_solution, prediction, fig_name=fig_path)
+        print(f"Visualization saved to {fig_path}")
+        
+        # Evaluate the current solution
+        metrics = evaluate_solution(task_with_preds, task_solution, prediction, code)
+        print(f"Iteration {iteration} metrics:")
+        print(f"  Train Grid Accuracy: {metrics['train_grid_accuracy']:.4f}")
+        print(f"  Train Cell Accuracy: {metrics['train_cell_accuracy']:.4f}")
+        print(f"  Test Grid Accuracy: {metrics['grid_accuracy']:.4f}")
+        print(f"  Test Cell Accuracy: {metrics['cell_accuracy']:.4f}")
+        
+        # Get feedback from LLM
+        print(f"Getting feedback for iteration {iteration}...")
+        feedback = get_llm_feedback(task_with_preds, task_solution, prediction, code, fig_path=f'feedback_{iteration}.png')
+        
+        # Save current iteration results
+        current_result = {
+            'iteration': iteration,
+            'code': code,
+            'metrics': metrics,
+            'feedback': feedback,
+            'prediction': prediction
+        }
+        history.append(current_result)
+        
+        # Check if this is the best solution so far - prioritizing training accuracy
+        if metrics['train_grid_accuracy'] > best_solution['metrics'].get('train_grid_accuracy', 0) or \
+           (metrics['train_grid_accuracy'] == best_solution['metrics'].get('train_grid_accuracy', 0) and 
+            metrics['train_cell_accuracy'] > best_solution['metrics'].get('train_cell_accuracy', 0)):
+            best_solution = {
+                'iteration': iteration,
+                'code': code,
+                'metrics': metrics,
+                'prediction': prediction
+            }
+            print(f"New best solution found at iteration {iteration}!")
+        
+        # Check if we've reached perfect accuracy on training examples
+        if metrics['train_grid_accuracy'] == 1.0:
+            print(f"Perfect training accuracy achieved at iteration {iteration}! Stopping early.")
+            break
+        
+        # Update messages for next iteration
+        messages.append({
+            "role": "assistant", 
+            "content": response.choices[0].message.content
+        })
+        
+        messages.append({
+            "role": "user",
+            "content": f"""I received the following feedback on my solution from iteration {iteration}:
 
 {feedback}
 
 Based on this feedback, please provide an improved version of the transform function that better captures the transformation pattern."""
-})
+        })
+    
+    # Print final results
+    print("\n===== Iterative LLM Solution Complete =====")
+    print(f"Best solution was from iteration {best_solution['iteration']}")
+    print(f"Best metrics: Train Grid Accuracy: {best_solution['metrics']['train_grid_accuracy']:.4f}, " + 
+          f"Train Cell Accuracy: {best_solution['metrics']['train_cell_accuracy']:.4f}")
+    print(f"Test metrics: Grid Accuracy: {best_solution['metrics']['grid_accuracy']:.4f}, " + 
+          f"Cell Accuracy: {best_solution['metrics']['cell_accuracy']:.4f}")
+    
+    return {
+        'best_solution': best_solution,
+        'history': history
+    }
 
-# Get improved solution from LLM
-response = completion(
-    model=MODEL,
-    messages=messages
-)
-
-
-# Print the full response content
-print("\n========== FULL LLM RESPONSE ==========\n")
-print(response.choices[0].message.content)
-print("\n======================================\n")
-
-# Extract and execute the code
-code = parse_python_code(response.choices[0].message.content)
-result = run_transforms([deepcopy(test["input"]) for test in challenge["test"]], code)
-prediction = result.get_result()
-
-# Execute on training examples
-num_train = len(task['train'])
-for i in range(num_train):
-    result = run_transforms([deepcopy(task['train'][i]['input'])], code)
-    task['train'][i]['prediction'] = result.get_result()
-
-# Visualize results (this will be visible to the user)
-plot_task_complete(task, task_solution, prediction, fig_name='iter_2.png')
+# Main execution
+if __name__ == "__main__":
+    # You can change the max_iterations parameter here
+    result = iterative_llm_solution(max_iterations=5)
+    
+    # Optionally recreate the visualization of the best solution
+    best_iter = result['best_solution']['iteration']
+    best_code = result['best_solution']['code']
+    
+    # Re-run the best solution for final visualization
+    task_with_preds, prediction = execute_on_examples(
+        {'id': t, 'train': task['train'], 'test': task['test']}, 
+        best_code
+    )
+    
+    # Save the best solution visualization
+    plot_task_complete(task_with_preds, task_solution, prediction, fig_name='best_solution.png')
+    print(f"Best solution visualization saved to best_solution.png")
+    
+    # You could also save the full result history for analysis
+    with open('solution_history.json', 'w') as f:
+        # Convert numpy arrays to lists for JSON serialization
+        history_serializable = []
+        for item in result['history']:
+            serializable_item = {k: v for k, v in item.items() if k != 'prediction'}
+            history_serializable.append(serializable_item)
+        
+        json.dump(history_serializable, f, indent=2)
