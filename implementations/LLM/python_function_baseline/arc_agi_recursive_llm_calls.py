@@ -90,9 +90,8 @@ def get_llm_feedback(task, task_solution, prediction, code, fig_path=None):
     """
     # Create and save the visualization
     plt.figure(figsize=(15, 10))
-    feedback_fig_name = fig_path if fig_path is not None else 'feedback_visualization.png'
-    plot_task_complete(task, task_solution, prediction, fig_name=feedback_fig_name)
-    img_base64 = image_to_base64(feedback_fig_name)
+    plot_task_complete(task, task_solution, prediction, fig_name=fig_path)
+    img_base64 = image_to_base64(fig_path)
     
     # Prepare prompt for feedback with image included
     feedback_prompt = [
@@ -267,7 +266,7 @@ def iterative_llm_solution(max_iterations=5, model=MODEL):
         
         # Get feedback from LLM
         print(f"Getting feedback for iteration {iteration}...")
-        feedback = get_llm_feedback(task_with_preds, task_solution, prediction, code, fig_path=f'feedback_{iteration}.png')
+        feedback = get_llm_feedback(task_with_preds, task_solution, prediction, code, fig_path=fig_path)
         
         # Save current iteration results
         current_result = {
