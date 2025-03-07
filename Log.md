@@ -1,5 +1,17 @@
 # Log
 
+
+## 03/06/2025, Thursday
+* add python function transform baseline [todo]
+    * https://github.com/michaelhodel/arc-dsl/blob/main/solvers.py
+    * https://github.com/michaelhodel/re-arc
+    * Domain Specific Language for the Abstraction and Reasoning Corpus
+* add recursive llm calls [done]
+    * python arc_agi_recursive_llm_calls.py
+
+## 03/05/2025, Wednesday
+* clean up the code to generate predictions for train examples and update visualization to show train example predictions
+
 ## 02/20/2025, Thursday
 * model baseline, add more examples
 * python function baseline
@@ -108,3 +120,8 @@ Fitness Evaluation
 * The scoring has two tiers:
     * Primary Score: Number of complete example grids the function solves perfectly
     * Secondary Score: For grids that aren't perfectly solved, we count how many individual cells the function got correct
+
+
+## 02/12/2025, Wednesday
+Starting 02/12, I plan to spend one month exploring AGI with fellow South Park Commons members from the Reasoning AI Forum on a part-time basis
+

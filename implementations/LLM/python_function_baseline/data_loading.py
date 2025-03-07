@@ -17,11 +17,11 @@ evaluation_solutions = load_json(base_path +'arc-agi_evaluation_solutions.json')
 
 test_challenges =  load_json(base_path +'arc-agi_test_challenges.json')
 
-print(f'Number of training challenges = {len(training_challenges)}')
-print(f'Number of training solutions = {len(training_solutions)}')
-print(f'Number of evaluation challenges = {len(evaluation_challenges)}')
-print(f'Number of evaluation solutions = {len(evaluation_solutions)}')
-print(f'Number of test challenges = {len(test_challenges)}')
+# print(f'Number of training challenges = {len(training_challenges)}')
+# print(f'Number of training solutions = {len(training_solutions)}')
+# print(f'Number of evaluation challenges = {len(evaluation_challenges)}')
+# print(f'Number of evaluation solutions = {len(evaluation_solutions)}')
+# print(f'Number of test challenges = {len(test_challenges)}')
 
 # 0:black, 1:blue, 2:red, 3:greed, 4:yellow, # 5:gray, 6:magenta, 7:orange, 8:sky, 9:brown
 
