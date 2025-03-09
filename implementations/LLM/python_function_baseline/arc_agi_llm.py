@@ -25,9 +25,9 @@ from code_execution import run_transforms
 from visualization import plot_task_complete
 
 _ = load_dotenv()
-MODEL = "gpt-4o"
-# MODEL = "claude-3-5-sonnet-20240620"
-# MODEL = "o3-mini"
+# MODEL = "gpt-4o"
+# MODEL = "claude-3-7-sonnet-20250219"
+MODEL = "o3-mini"
 
 challenge = {
     'id': t,
@@ -59,16 +59,28 @@ print("\n========== FULL LLM RESPONSE ==========\n")
 print(response.choices[0].message.content)
 print("\n======================================\n")
 
-# Extract and execute the code
+# Extract the code
 code = parse_python_code(response.choices[0].message.content)
-result = run_transforms([deepcopy(test["input"]) for test in challenge["test"]], code)
-prediction = result.get_result()
 
-# Execute on training examples
-num_train = len(task['train'])
-for i in range(num_train):
-    result = run_transforms([deepcopy(task['train'][i]['input'])], code)
-    task['train'][i]['prediction'] = result.get_result()
+# Save the code to a file for inspection
+code_file_path = "generated_transform_code.py"
+with open(code_file_path, "w") as f:
+    f.write(code)
+print(f"Generated code saved to {code_file_path}")
 
-# Visualize results
-plot_task_complete(task, task_solution, prediction, fig_name='arc_agi_llm.png')
+try:
+    # Execute the code
+    result = run_transforms([deepcopy(test["input"]) for test in challenge["test"]], code)
+    prediction = result.get_result()
+
+    # Execute on training examples
+    num_train = len(task['train'])
+    for i in range(num_train):
+        result = run_transforms([deepcopy(task['train'][i]['input'])], code)
+        task['train'][i]['prediction'] = result.get_result()
+
+    # Visualize results
+    plot_task_complete(task, task_solution, prediction, fig_name='arc_agi_llm.png')
+except Exception as e:
+    print(f"Error executing code: {e}")
+    print("Please check the generated_transform_code.py file for syntax errors")

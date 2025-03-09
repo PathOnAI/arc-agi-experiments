@@ -28,9 +28,9 @@ from code_execution import run_transforms
 from visualization import plot_task_complete
 
 _ = load_dotenv()
-MODEL = "gpt-4o"  # Using GPT-4o for more advanced visualization analysis capabilities
-# MODEL = "claude-3-5-sonnet-20240620"
-# MODEL = "o3-mini"
+# MODEL = "gpt-4o"  # Using GPT-4o for more advanced visualization analysis capabilities
+# MODEL = "claude-3-7-sonnet-20250219"
+MODEL = "o3-mini"
 
 def calculate_accuracy(prediction, target):
     """Calculate cell-wise accuracy between prediction and target grids"""

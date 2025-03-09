@@ -2,12 +2,12 @@
 
 
 ## 03/06/2025, Thursday
-* add python function transform baseline [todo]
-    * https://github.com/michaelhodel/arc-dsl/blob/main/solvers.py
-    * https://github.com/michaelhodel/re-arc
-    * Domain Specific Language for the Abstraction and Reasoning Corpus
-* add recursive llm calls [done]
-    * python arc_agi_recursive_llm_calls.py
+## 2. add python function transform baseline [todo]
+* https://github.com/michaelhodel/arc-dsl/blob/main/solvers.py
+* https://github.com/michaelhodel/re-arc
+* Domain Specific Language for the Abstraction and Reasoning Corpus
+## 1. add recursive llm calls [done]
+* python arc_agi_recursive_llm_calls.py
 
 ## 03/05/2025, Wednesday
 * clean up the code to generate predictions for train examples and update visualization to show train example predictions
@@ -124,4 +124,5 @@ Fitness Evaluation
 
 ## 02/12/2025, Wednesday
 Starting 02/12, I plan to spend one month exploring AGI with fellow South Park Commons members from the Reasoning AI Forum on a part-time basis
+Danqing attended SPC's arc-agi meeting for the first time
 
